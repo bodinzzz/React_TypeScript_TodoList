@@ -1,5 +1,7 @@
 import React from "react";
 import { ITask } from "../interfaces/ITask";
+import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface Props {
   task: ITask;
@@ -10,7 +12,9 @@ const TodoTask = ({ task, completeTask }: Props) => {
   return (
     <div>
       <div>{task.taskName}</div>
-      <button onClick={() => completeTask(task.taskName)}>delete</button>
+      <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => completeTask(task.taskName)}>
+        delete
+      </Button>
     </div>
   );
 };

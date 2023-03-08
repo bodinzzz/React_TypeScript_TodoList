@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import "./Home.scss";
 import { ITask } from "../interfaces/ITask";
 import TodoTask from "../components/TodoTask";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const [task, setTask] = useState<string>("");
@@ -36,7 +37,9 @@ const Home = () => {
     <div className="home">
       <input type="text" placeholder="Task..." name="task" onChange={handleChange} />
       <input type="number" placeholder="Deadline(in Days)" name="deadline" onChange={handleChange} />
-      <button onClick={addTask}>Add Task</button>
+      <Button variant="outlined" onClick={addTask}>
+        Add Task
+      </Button>
       <div className="todoList">
         {todoList.map((task: ITask, key: number) => {
           <button>delete</button>;
