@@ -1,4 +1,6 @@
 export interface ITask {
+  id: string;
   taskName: string;
-  deadline: number;
+  deadline: Date | null;
+  importance: number | null;
 }

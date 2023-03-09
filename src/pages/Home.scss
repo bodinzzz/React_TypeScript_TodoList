@@ -1,8 +1,19 @@
 @import "../styles/variables";
 
 .home {
-  //   &__test {
-  //     // background-color: $text-primary-color;
-  //     // color: red;
-  //   }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: antiquewhite;
+  height: 100vh;
+  &__input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__todo-list {
+    display: flex;
+    flex-direction: column;
+  }
 }
