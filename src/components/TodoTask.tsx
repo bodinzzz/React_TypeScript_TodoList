@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 // import { pink } from "@mui/material/colors";
 import "./TodoTask.scss";
+import moment from "moment";
 
 interface Props {
   task: ITask;
@@ -12,6 +13,13 @@ interface Props {
 }
 
 const card = (task: ITask, completeTask: any) => {
+  let deadline = new Date();
+  let deadlineFormatted: string = "";
+  if (task.deadline) {
+    deadline = new Date(task.deadline);
+    deadlineFormatted = moment(deadline).format("YYYY/MM/DD");
+  }
+
   return (
     <CardContent>
       <Rating name="read-only" value={task.importance} readOnly />
@@ -19,7 +27,7 @@ const card = (task: ITask, completeTask: any) => {
         {task.taskName}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        {task.deadline ? task.deadline.toString() : ""}
+        {deadlineFormatted}
       </Typography>
       <Button variant="outlined" startIcon={<EditIcon />}>
         Edit

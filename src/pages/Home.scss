@@ -11,6 +11,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    // background-color: rosybrown;
+    &__task {
+      margin: 20px;
+      // background-color: rgb(170, 188, 143);
+    }
+    &__deadline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      // background-color: rosybrown;
+    }
+    &__rating {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      // background-color: rosybrown;
+    }
   }
   &__todo-list {
     display: flex;

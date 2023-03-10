@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import "./Home.scss";
 import { ITask } from "../interfaces/ITask";
 import TodoTask from "../components/TodoTask";
-import { Button, TextField, Rating, Container } from "@mui/material";
+import { Button, TextField, Rating, Container, Box } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -33,6 +33,7 @@ const Home = () => {
       setTaskError(true);
     }
     if (task && deadline && importance) {
+      console.log(task, deadline, importance);
       const newTask = { id: Date.now().toString(), taskName: task, deadline: deadline, importance: importance };
       setTodoList([...todoList, newTask]);
     }
@@ -47,8 +48,6 @@ const Home = () => {
   };
 
   const deadlineErrorMessage = React.useMemo(() => {
-    console.log("HERE");
-    console.log(deadlineError);
     switch (deadlineError) {
       case "maxDate":
       case "minDate": {
@@ -74,10 +73,11 @@ const Home = () => {
           name="task"
           variant="outlined"
           error={taskError}
-          helperText={taskError ? "Task Name is Required" : "ok"}
+          helperText={taskError ? "Task Name is Required" : " "}
           onChange={(event) => setTask(event.target.value)}
+          className="home__input-container__task"
         />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} className="home__input-container__deadline">
           <DatePicker
             value={deadline}
             label="Deadline"
@@ -89,18 +89,20 @@ const Home = () => {
             onError={(newError: DateValidationError) => setDeadlineError(newError)}
             slotProps={{
               textField: {
-                helperText: deadlineError ? deadlineErrorMessage : "ok",
+                helperText: deadlineError ? deadlineErrorMessage : " ",
               },
             }}
           />
         </LocalizationProvider>
-        <Rating
-          name="simple-controlled"
-          value={importance}
-          onChange={(event, newValue) => {
-            setImportance(newValue);
-          }}
-        />
+        <Box className="home__input-container__rating">
+          <Rating
+            name="simple-controlled"
+            value={importance}
+            onChange={(event, newValue) => {
+              setImportance(newValue);
+            }}
+          />
+        </Box>
         <Button variant="outlined" size="large" type="submit">
           Add Task
         </Button>
