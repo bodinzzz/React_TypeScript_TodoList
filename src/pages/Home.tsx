@@ -107,11 +107,11 @@ const Home = () => {
           Add Task
         </Button>
       </form>
-      <Container>
+      <div className="home__todo-tasks">
         {todoList.map((task: ITask, key: number) => {
           return <TodoTask key={key} task={task} completeTask={completeTask} />;
         })}
-      </Container>
+      </div>
     </div>
   );
 };

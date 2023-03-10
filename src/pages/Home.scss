@@ -1,17 +1,18 @@
 @import "../styles/variables";
 
 .home {
+  padding: 5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: antiquewhite;
+  // justify-content: center;
+  // align-items: center;
+  background-color: rgb(251, 251, 251);
   height: 100vh;
   &__input-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    // background-color: rosybrown;
+    padding: 1rem;
     &__task {
       margin: 20px;
       // background-color: rgb(170, 188, 143);
@@ -31,8 +32,12 @@
       // background-color: rosybrown;
     }
   }
-  &__todo-list {
-    display: flex;
-    flex-direction: column;
+  &__todo-tasks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 0.5rem;
+    background-color: rgb(242, 242, 242);
+    padding: 1rem;
   }
 }
