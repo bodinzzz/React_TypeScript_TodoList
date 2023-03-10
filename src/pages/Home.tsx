@@ -3,19 +3,35 @@ import "./Home.scss";
 import { ITask } from "../interfaces/ITask";
 import TodoTask from "../components/TodoTask";
 import { Button, TextField, Rating, Container } from "@mui/material";
+import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import moment from "react-moment";
+import type { DateValidationError } from "@mui/x-date-pickers";
+// import moment from "react-moment";
 
 const Home = () => {
+  const today = new Date();
+  // const today = dayjs();
+  // var todayDate = new Date();
+  // todayDate = today.toDate();
+  // console.log(today);
+  // console.log(todayDate);
   const [task, setTask] = useState<string>("");
   const [deadline, setDeadline] = useState<Date | null>(null);
   const [todoList, setTodoList] = useState<ITask[]>([]);
   const [importance, setImportance] = useState<number | null>(null);
+  const [taskError, setTaskError] = useState(false);
+  const [deadlineError, setDeadlineError] = useState<DateValidationError | null>(null);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (!task) {
+      setTaskError(true);
+    }
+    if (!deadline) {
+      setTaskError(true);
+    }
     if (task && deadline && importance) {
       const newTask = { id: Date.now().toString(), taskName: task, deadline: deadline, importance: importance };
       setTodoList([...todoList, newTask]);
@@ -30,17 +46,52 @@ const Home = () => {
     );
   };
 
+  const deadlineErrorMessage = React.useMemo(() => {
+    console.log("HERE");
+    console.log(deadlineError);
+    switch (deadlineError) {
+      case "maxDate":
+      case "minDate": {
+        return "date must in the first quarter of 2022";
+      }
+
+      case "invalidDate": {
+        return "Your date is not valid";
+      }
+
+      default: {
+        return "Your date is not valid";
+      }
+    }
+  }, [deadline]);
+
   return (
     <div className="home">
       <form className="home__input-container" onSubmit={handleSubmit}>
-        <TextField type="text" label="Task" name="task" variant="outlined" required onChange={(event) => setTask(event.target.value)} />
+        <TextField
+          type="text"
+          label="Task"
+          name="task"
+          variant="outlined"
+          error={taskError}
+          helperText={taskError ? "Task Name is Required" : "ok"}
+          onChange={(event) => setTask(event.target.value)}
+        />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             value={deadline}
+            label="Deadline"
             onChange={(newDeadline: Date | null) => {
               setDeadline(newDeadline);
             }}
+            disablePast
             format="YYYY/MM/DD"
+            onError={(newError: DateValidationError) => setDeadlineError(newError)}
+            slotProps={{
+              textField: {
+                helperText: deadlineError ? deadlineErrorMessage : "ok",
+              },
+            }}
           />
         </LocalizationProvider>
         <Rating
